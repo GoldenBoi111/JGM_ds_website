@@ -4,6 +4,16 @@ body {
   font-family: Arial, sans-serif;
   background-color: #09090b;
   color: white;
+  margin-bottom: 80px;
+}
+
+a:link, /* Unvisited link */
+a:visited, /* Visited link */
+a:hover, /* Mouse over link */
+a:active {
+  /* Selected link */
+  color: inherit; /* Or a specific color like #000 (black) */
+  text-decoration: none;
 }
 
 html,
@@ -24,7 +34,7 @@ body,
 
 /* Header Styles */
 .header {
-  background-color: linear-gradient(to right, #243447, #1e2d3b);
+  background-color: black;
   padding: 200px;
   padding-bottom: 20px;
   padding-top: 20px;

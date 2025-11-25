@@ -5,14 +5,10 @@ import {
   useScroll,
   useTransform,
 } from "framer-motion";
-import React from "react";
 import { SiAlwaysdata } from "react-icons/si";
-import TextType from "./TextType.tsx";
-import { FiArrowRight, FiMapPin } from "react-icons/fi";
-import GraphImage from "../assets/Graph15.png";
 import { useRef } from "react";
-import Prism from "./Prism.tsx";
-
+import { Input } from "@chakra-ui/react";
+import { Link } from "react-router-dom";
 function SmoothScrollHero() {
   return (
     <div className="bg-zinc-950">
@@ -24,28 +20,13 @@ function SmoothScrollHero() {
           //   infinite: true,
           //   syncTouch: true,
         }}>
-        <Nav />
+        {/*<Nav />*/}
         <Hero />
         <Schedule />
       </ReactLenis>
     </div>
   );
 }
-
-const Nav = () => {
-  return (
-    <nav className="fixed md:m-0 flex justify-center items-center px-6 py-3 text-white z-9999">
-      <SiAlwaysdata className="hidden md:block md:text-6xl mix-blend-difference" />
-      <header className="header">
-        <div className="search-box w-3xs md:w-3xl ">
-          <span className="icon">⚙️</span>
-          <input type="text" placeholder="Search..." />
-          <button className="">Search</button>
-        </div>
-      </header>
-    </nav>
-  );
-};
 
 const SECTION_HEIGHT = 1500;
 
@@ -58,7 +39,7 @@ const Hero = () => {
 
       <ParallaxImages />
 
-      <div className="absolute bottom-0 left-0 right-0 h-96 bg-gradient-to-b from-zinc-950/0 to-zinc-950" />
+      {/*<div className="absolute bottom-0 left-0 right-0 h-96 bg-gradient-to-b from-zinc-950/0 to-zinc-950" />*/}
     </div>
   );
 };
@@ -167,36 +148,48 @@ const Schedule = () => {
         className="mb-20 text-4xl font-black uppercase text-zinc-50">
         Current Projects
       </motion.h1>
-      <ScheduleItem
-        title="Datascience: Education"
-        date="2025"
-        location="Florida"
-      />
-      <ScheduleItem
-        title="Datascience: Healthcare"
-        date="2025"
-        location="Texas"
-      />
-      <ScheduleItem
-        title="Datascience: Financial Wellbeing"
-        date="2026"
-        location="Florida"
-      />
-      <ScheduleItem
-        title="Datascience: Food insecurity"
-        date="2026"
-        location="Florida"
-      />
-      <ScheduleItem
-        title="Low Code AI: xxxxx"
-        date="2025"
-        location="California"
-      />
-      <ScheduleItem
-        title="Donation drive: xxxx"
-        date="2026"
-        location="California"
-      />
+      <Link to="/datascience-education">
+        <ScheduleItem
+          title="Datascience: Education"
+          date="2025"
+          location="Florida"
+        />
+      </Link>
+      <Link to="/datascience-healthcare">
+        <ScheduleItem
+          title="Datascience: Healthcare"
+          date="2025"
+          location="Texas"
+        />
+      </Link>
+      <Link to="/datascience-financial-wellbeing">
+        <ScheduleItem
+          title="Datascience: Financial Wellbeing"
+          date="2026"
+          location="Florida"
+        />
+      </Link>
+      <Link to="/datascience-food-insecurity">
+        <ScheduleItem
+          title="Datascience: Food insecurity"
+          date="2026"
+          location="Florida"
+        />
+      </Link>
+      <Link to="/low-code-ai">
+        <ScheduleItem
+          title="Low Code AI: xxxxx"
+          date="2025"
+          location="California"
+        />
+      </Link>
+      <Link to="/donation-drive">
+        <ScheduleItem
+          title="Donation drive: xxxx"
+          date="2026"
+          location="California"
+        />
+      </Link>
     </section>
   );
 };

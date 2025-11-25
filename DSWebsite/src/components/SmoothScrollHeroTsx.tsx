@@ -1,6 +1,7 @@
 import React from "react";
 import SmoothScrollHero from "./SmoothScrollHero.jsx";
 import TiltedCard from "./TiltedCard.js";
+import { Link } from "react-router-dom";
 
 function SmoothScroolHeroTsx() {
   return (
@@ -10,8 +11,9 @@ function SmoothScroolHeroTsx() {
         <div className="pt-10"></div>
         <h2>Areas of development</h2>
         <div className="cards mt-10">
-          <div className="card px-10">
-            <h3>School Dropout rates</h3>
+          <Link className="card" to="/school-dropout-rates">
+            <h3 className="color-white-900">School Dropout rates</h3>
+
             <TiltedCard
               imageSrc="https://media.istockphoto.com/id/171306436/photo/red-brick-high-school-building-exterior.jpg?s=612x612&w=0&k=20&c=vksDyCVrfCpvb9uk4-wcBYu6jbTZ3nCOkGHPSgNy-L0="
               altText="XYZ School"
@@ -28,7 +30,6 @@ function SmoothScroolHeroTsx() {
               overlayContent={
                 <p
                   style={{
-                    fontFamily: "Helvetica Neue",
                     fontWeight: "bold",
                     WebkitTextStrokeWidth: 0.5,
                     WebkitTextStrokeColor: "black",
@@ -44,8 +45,8 @@ function SmoothScroolHeroTsx() {
               Call out a feature, benefit, or value of you site that can stand
               on its own.
             </p>
-          </div>
-          <div className="card">
+          </Link>
+          <Link className="card" to="/education-quality">
             <h3>Education Quality</h3>
             <TiltedCard
               imageSrc="https://media.istockphoto.com/id/171306436/photo/red-brick-high-school-building-exterior.jpg?s=612x612&w=0&k=20&c=vksDyCVrfCpvb9uk4-wcBYu6jbTZ3nCOkGHPSgNy-L0="
@@ -63,7 +64,6 @@ function SmoothScroolHeroTsx() {
               overlayContent={
                 <p
                   style={{
-                    fontFamily: "Helvetica Neue",
                     fontWeight: "bold",
                     WebkitTextStrokeWidth: 0.5,
                     WebkitTextStrokeColor: "black",
@@ -79,8 +79,8 @@ function SmoothScroolHeroTsx() {
               Call out a feature, benefit, or value of your site that can stand
               on its own.
             </p>
-          </div>
-          <div className="card">
+          </Link>
+          <Link className="card" to="/child-development-index">
             <h3>Child Development index</h3>
             <TiltedCard
               imageSrc="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSkSilI0EKLP6lMPQQAvBkF6KOxweyreZCPvw&s"
@@ -98,7 +98,6 @@ function SmoothScroolHeroTsx() {
               overlayContent={
                 <p
                   style={{
-                    fontFamily: "Helvetica Neue",
                     fontWeight: "bold",
                     WebkitTextStrokeWidth: 0.5,
                     WebkitTextStrokeColor: "black",
@@ -114,7 +113,7 @@ function SmoothScroolHeroTsx() {
               Call out a feature, benefit, or value of your site that can stand
               on its own.
             </p>
-          </div>
+          </Link>
         </div>
       </section>
     </div>
