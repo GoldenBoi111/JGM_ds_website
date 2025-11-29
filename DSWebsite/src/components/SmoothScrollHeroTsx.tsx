@@ -3,14 +3,14 @@ import SmoothScrollHero from "./SmoothScrollHero.jsx";
 import TiltedCard from "./TiltedCard.js";
 import { Link } from "react-router-dom";
 
-function SmoothScroolHeroTsx() {
+function SmoothScrollHeroTsx() {
   return (
     <div>
       <SmoothScrollHero />
       <section className="development">
         <div className="pt-10"></div>
         <h2>Areas of development</h2>
-        <div className="cards mt-10">
+        <div className="cards mt-10 py-10">
           <Link className="card" to="/school-dropout-rates">
             <h3 className="color-white-900">School Dropout rates</h3>
 
@@ -120,4 +120,4 @@ function SmoothScroolHeroTsx() {
   );
 }
 
-export default SmoothScroolHeroTsx;
+export default SmoothScrollHeroTsx;

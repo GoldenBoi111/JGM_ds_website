@@ -1,8 +1,8 @@
 import MainContent from "./MainContent";
-
+import { useParams, Link } from "react-router-dom";
 import React from "react";
 
-const SchoolDropOutRates = () => {
+const Blog = () => {
   return (
     <>
       <MainContent />
@@ -10,4 +10,4 @@ const SchoolDropOutRates = () => {
   );
 };
 
-export default SchoolDropOutRates;
+export default Blog;
