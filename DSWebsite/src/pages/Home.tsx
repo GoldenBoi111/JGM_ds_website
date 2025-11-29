@@ -1,9 +1,7 @@
-import React from "react";
 import "../App.css";
 import SmoothScrollHeroTsx from "../components/SmoothScrollHeroTsx.tsx";
 import Particles from "../components/Particles.tsx";
 import TextType from "../components/TextType.tsx";
-import Footer from "../components/Footer.tsx";
 
 function Home() {
   return (

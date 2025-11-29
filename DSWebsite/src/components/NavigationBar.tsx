@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import { SiAlwaysdata } from "react-icons/si";
 import {
   FiHome,
-  FiTrendingDown,
   FiAward,
   FiLogIn,
   FiUserPlus,
