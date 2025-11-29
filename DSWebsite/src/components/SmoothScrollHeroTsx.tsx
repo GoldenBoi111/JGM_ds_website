@@ -1,4 +1,3 @@
-import React from "react";
 import SmoothScrollHero from "./SmoothScrollHero.jsx";
 import TiltedCard from "./TiltedCard.js";
 import { Link } from "react-router-dom";
