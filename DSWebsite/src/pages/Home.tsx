@@ -1,5 +1,5 @@
 import "../App.css";
-import SmoothScrollHeroTsx from "../components/SmoothScrollHeroTsx.tsx";
+import SmoothScrollHero from "../components/SmoothScrollHero.tsx";
 import Particles from "../components/Particles.tsx";
 import TextType from "../components/TextType.tsx";
 
@@ -29,7 +29,7 @@ function Home() {
           disableRotation={false}
         />
       </section>
-      <SmoothScrollHeroTsx />
+      <SmoothScrollHero />
     </div>
   );
 }
