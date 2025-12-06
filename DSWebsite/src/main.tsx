@@ -3,6 +3,9 @@ import { BrowserRouter } from "react-router-dom";
 import { inject } from "@vercel/analytics";
 //import "./index.css";
 import App from "./App.tsx";
+import { injectSpeedInsights } from "@vercel/speed-insights";
+
+injectSpeedInsights();
 
 inject();
 
