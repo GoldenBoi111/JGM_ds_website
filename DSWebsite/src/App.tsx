@@ -8,12 +8,14 @@ import BlogIndex from "./pages/BlogIndex.tsx";
 import BlogPost from "./pages/BlogPost.tsx";
 import LoginPage from "./pages/LoginPage.tsx";
 import SignUpPage from "./pages/SignUpPage.tsx";
+import { Analytics } from "@vercel/analytics/next";
 
 function App() {
   return (
     <div className="flex flex-col min-h-screen">
       <NavigationBar />
       <main className="flex-grow">
+        <Analytics />
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/blog" element={<BlogIndex />} />
