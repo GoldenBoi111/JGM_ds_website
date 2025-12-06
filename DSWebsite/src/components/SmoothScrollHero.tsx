@@ -176,19 +176,19 @@ const projects: Project[] = [
     title: "Data Analysis on Peru Government Datasets",
     date: "September 2025",
     location: "",
-    to: "/data-analysis-peru",
+    to: "/blog/data-analysis-peru",
   },
   {
     title: "Website Design and Implementation",
     date: "October 2025",
     location: "",
-    to: "/website-design",
+    to: "/blog/website-design",
   },
   {
     title: "AI Chatbot Integration for Automated Chart Generation",
     date: "November 2025",
     location: "",
-    to: "/ai-chatbot-integration",
+    to: "/blog/ai-chatbot-integration",
   },
 ];
 
@@ -250,16 +250,20 @@ const ScheduleItem = ({ title, date }: ScheduleItemProps) => {
 const DevelopmentSection = () => {
   return (
     <section className="development">
-      <div className="pt-10"></div>
-      <h2>Areas of development</h2>
+      <div className="pt-20"></div>
+      <h2 className="text-4xl font-bold text-center text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-purple-500">
+        Areas of Development
+      </h2>
       <div className="cards mt-10 py-10">
-        <Link className="card" to="/school-dropout-rates">
-          <h3 className="color-white-900">School Dropout rates</h3>
+        <Link className="card" to="/blog/school-dropout-rates">
+          <h3 className="text-xl font-semibold text-white mb-2">
+            Tackling School Dropout Rates
+          </h3>
 
           <TiltedCard
-            imageSrc="https://media.istockphoto.com/id/171306436/photo/red-brick-high-school-building-exterior.jpg?s=612x612&w=0&k=20&c=vksDyCVrfCpvb9uk4-wcBYu6jbTZ3nCOkGHPSgNy-L0="
-            altText="XYZ School"
-            captionText="XYZ School"
+            imageSrc="https://images.pexels.com/photos/8613089/pexels-photo-8613089.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
+            altText="An empty classroom with wooden desks and chairs"
+            captionText="Analyzing Dropout Factors"
             containerHeight="200px"
             containerWidth="200px"
             imageHeight="200px"
@@ -268,32 +272,20 @@ const DevelopmentSection = () => {
             scaleOnHover={1.2}
             showMobileWarning={false}
             showTooltip={true}
-            displayOverlayContent={true}
-            overlayContent={
-              <p
-                style={{
-                  fontWeight: "bold",
-                  WebkitTextStrokeWidth: 0.5,
-                  WebkitTextStrokeColor: "black",
-                  color: "gold",
-                  fontSize: 30,
-                  padding: 6,
-                }}>
-                XYZ School
-              </p>
-            }
           />
-          <p className="py-2">
-            Call out a feature, benefit, or value of you site that can stand on
-            its own.
+          <p className="py-2 text-zinc-400">
+            Using data to understand and address the root causes of student
+            attrition in educational systems.
           </p>
         </Link>
-        <Link className="card" to="/education-quality">
-          <h3>Education Quality</h3>
+        <Link className="card" to="/blog/education-quality">
+          <h3 className="text-xl font-semibold text-white mb-2">
+            Measuring Education Quality
+          </h3>
           <TiltedCard
-            imageSrc="https://media.istockphoto.com/id/171306436/photo/red-brick-high-school-building-exterior.jpg?s=612x612&w=0&k=20&c=vksDyCVrfCpvb9uk4-wcBYu6jbTZ3nCOkGHPSgNy-L0="
-            altText="XYZ School"
-            captionText="XYZ School"
+            imageSrc="https://images.pexels.com/photos/4145190/pexels-photo-4145190.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
+            altText="A teacher writing on a whiteboard in front of students"
+            captionText="Defining Quality Metrics"
             containerHeight="200px"
             containerWidth="200px"
             imageHeight="200px"
@@ -302,31 +294,32 @@ const DevelopmentSection = () => {
             scaleOnHover={1.2}
             showMobileWarning={false}
             showTooltip={true}
-            displayOverlayContent={true}
-            overlayContent={
-              <p
-                style={{
-                  fontWeight: "bold",
-                  WebkitTextStrokeWidth: 0.5,
-                  WebkitTextStrokeColor: "black",
-                  color: "gold",
-                  fontSize: 30,
-                  padding: 6,
-                }}>
-                XYZ School
-              </p>
-            }
           />
-          <p className="py-2">
-            Call out a feature, benefit, or value of your site that can stand on
-            its own.
+          <p className="py-2 text-zinc-400">
+            Developing a framework to quantify and assess the quality of
+            education beyond traditional metrics.
           </p>
         </Link>
-        <Link className="card" to="/child-development-index">
-          <h3>Child Development index</h3>
-          <p className="py-2">
-            Call out a feature, benefit, or value of your site that can stand on
-            its own.
+        <Link className="card" to="/blog/child-development-index">
+          <h3 className="text-xl font-semibold text-white mb-2">
+            Child Development Index
+          </h3>
+          <TiltedCard
+            imageSrc="https://images.pexels.com/photos/296301/pexels-photo-296301.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
+            altText="A group of diverse children smiling"
+            captionText="Tracking Well-being"
+            containerHeight="200px"
+            containerWidth="200px"
+            imageHeight="200px"
+            imageWidth="200px"
+            rotateAmplitude={12}
+            scaleOnHover={1.2}
+            showMobileWarning={false}
+            showTooltip={true}
+          />
+          <p className="py-2 text-zinc-400">
+            Exploring the Child Development Index to track and improve the
+            health, education, and nutrition of children.
           </p>
         </Link>
       </div>

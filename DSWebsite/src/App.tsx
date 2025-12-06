@@ -1,21 +1,27 @@
 //import "./App.css";
 import Home from "./pages/Home.tsx";
 import { Routes, Route } from "react-router-dom";
-import Blog from "./pages/Blog.tsx";
 import NavigationBar from "./components/NavigationBar.tsx";
 import Footer from "./components/Footer.tsx";
 import ChatBot from "./components/ChatBot.tsx";
+import BlogIndex from "./pages/BlogIndex.tsx";
+import BlogPost from "./pages/BlogPost.tsx";
+import LoginPage from "./pages/LoginPage.tsx";
+import SignUpPage from "./pages/SignUpPage.tsx";
 
 function App() {
   return (
     <div className="flex flex-col min-h-screen">
       <NavigationBar />
-      <div className="flex-grow">
+      <main className="flex-grow">
         <Routes>
           <Route path="/" element={<Home />} />
-          <Route path="/blog" element={<Blog />} />
+          <Route path="/blog" element={<BlogIndex />} />
+          <Route path="/blog/:slug" element={<BlogPost />} />
+          <Route path="/login" element={<LoginPage />} />
+          <Route path="/signup" element={<SignUpPage />} />
         </Routes>
-      </div>
+      </main>
       <Footer />
       <ChatBot />
     </div>
