@@ -5,8 +5,6 @@ import { HelmetProvider } from "react-helmet-async";
 //import "./index.css";
 import App from "./App.tsx";
 import { injectSpeedInsights } from "@vercel/speed-insights";
-import { ThemeProvider } from "./contexts/ThemeContext";
-import { UserPreferencesProvider } from "./contexts/UserPreferencesContext";
 
 injectSpeedInsights();
 
@@ -28,12 +26,8 @@ if ("serviceWorker" in navigator) {
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
   <BrowserRouter>
-    <UserPreferencesProvider>
-      <ThemeProvider>
-        <HelmetProvider>
-          <App />
-        </HelmetProvider>
-      </ThemeProvider>
-    </UserPreferencesProvider>
+    <HelmetProvider>
+      <App />
+    </HelmetProvider>
   </BrowserRouter>
 );

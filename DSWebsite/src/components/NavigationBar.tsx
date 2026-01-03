@@ -8,7 +8,6 @@ import {
   FiMenu,
   FiX,
   FiEdit,
-  FiSettings,
 } from "react-icons/fi";
 import {
   Navbar,
@@ -67,9 +66,7 @@ function NavigationBar() {
           <Link to="/" aria-label="JGM Innovation Home">
             <NavbarBrand>
               <SiAlwaysdata className="text-3xl" aria-hidden="true" />
-              <span className="ml-2 font-bold text-xl">
-                JGM Innovation
-              </span>
+              <span className="ml-2 font-bold text-xl">JGM Innovation</span>
             </NavbarBrand>
           </Link>
         </div>

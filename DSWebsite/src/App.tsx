@@ -6,7 +6,6 @@ import Footer from "./components/Footer.tsx";
 import ChatBot from "./components/ChatBot.tsx";
 import { Helmet } from "react-helmet-async";
 import JSONLD from "./components/JSONLD";
-import GoogleAnalytics from "./components/GoogleAnalytics";
 
 // Lazy load pages for code splitting
 const Home = lazy(() => import("./pages/Home.tsx"));
@@ -91,7 +90,6 @@ function App() {
         />
       </Helmet>
       <JSONLD schema={organizationSchema} />
-      <GoogleAnalytics />
       <div className="flex flex-col min-h-screen">
         <NavigationBar />
         <main className="flex-grow">
