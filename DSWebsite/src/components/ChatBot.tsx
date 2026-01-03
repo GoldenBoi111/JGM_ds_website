@@ -106,14 +106,15 @@ const ChatBot = () => {
   const handleSendMessage = (e: React.FormEvent) => {
     e.preventDefault();
     const userMessage = inputValue.trim();
-    if (userMessage && !isLoading) { // Prevent sending when loading
+    if (userMessage && !isLoading) {
+      // Prevent sending when loading
       // Add user message to chat
       const userMessageObj: Message = {
         from: "user",
         text: userMessage,
-        id: `user-${Date.now()}` // Add unique ID
+        id: `user-${Date.now()}`, // Add unique ID
       };
-      setMessages(prev => [...prev, userMessageObj]);
+      setMessages((prev) => [...prev, userMessageObj]);
       setInputValue("");
 
       // Set loading state
@@ -151,7 +152,7 @@ const ChatBot = () => {
                 ...prevMessages,
                 {
                   from: "bot",
-                  text: data.response,
+                  text: data.reply,
                   id: `bot-${Date.now()}`,
                 },
               ]);
@@ -233,7 +234,9 @@ const ChatBot = () => {
             aria-modal="true"
             aria-label="Chat window">
             <div className="p-4 border-b border-zinc-700 flex justify-between items-center">
-              <h3 className="font-semibold text-white" tabIndex={0}>JGM Support</h3>
+              <h3 className="font-semibold text-white" tabIndex={0}>
+                JGM Support
+              </h3>
               <button
                 onClick={toggleFullScreen}
                 className="text-zinc-400 hover:text-white transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 rounded"
@@ -320,7 +323,7 @@ const ChatBot = () => {
                 aria-label={isLoading ? "Sending message" : "Send message"}
                 tabIndex={0}
                 onTouchStart={() => {}} // Enable proper touch behavior
-                >
+              >
                 {isLoading ? <FiLoader className="animate-spin" /> : <FiSend />}
               </button>
             </form>
