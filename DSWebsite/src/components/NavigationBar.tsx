@@ -21,7 +21,6 @@ import {
 import Tooltip from "@mui/material/Tooltip";
 import { Link, useLocation } from "react-router-dom";
 import Search from "./Search";
-import UserPreferencesModal from "./UserPreferencesModal";
 
 function NavigationBar() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -103,7 +102,6 @@ function NavigationBar() {
         {/* Right Section - Using flex-grow to balance the layout */}
         <div className="flex items-center gap-4">
           <div className="flex items-center gap-2">
-            <UserPreferencesModal />
             <Search />
           </div>
           <NavbarItem className="hidden lg:flex">
@@ -131,7 +129,6 @@ function NavigationBar() {
         className="bg-zinc-950/90 backdrop-blur-sm z-[10000] w-full max-w-full fixed top-[var(--navbar-height)] left-0 right-0"
         aria-label="Main navigation menu">
         <div className="flex justify-center gap-4 py-4 border-b border-zinc-700">
-          <UserPreferencesModal />
           <Search />
         </div>
         {menuItems.map((item, index) => (
