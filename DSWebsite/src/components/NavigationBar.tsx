@@ -8,6 +8,7 @@ import {
   FiMenu,
   FiX,
   FiEdit,
+  FiSettings,
 } from "react-icons/fi";
 import {
   Navbar,
@@ -20,6 +21,8 @@ import {
 } from "@heroui/navbar";
 import Tooltip from "@mui/material/Tooltip";
 import { Link, useLocation } from "react-router-dom";
+import Search from "./Search";
+import UserPreferencesModal from "./UserPreferencesModal";
 
 function NavigationBar() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -52,66 +55,100 @@ function NavigationBar() {
       onMenuOpenChange={setIsMenuOpen}
       className="w-full fixed text-white bg-zinc-950/80 backdrop-blur-sm border-b border-zinc-800 z-[9999]"
       maxWidth="full">
-      <NavbarContent className="w-full" justify="center">
-        {/* Left Section */}
-        <div className="flex items-center gap-4 pl-4">
+      <NavbarContent className="w-full max-w-full px-4">
+        {/* Left Section - Logo and menu toggle */}
+        <div className="flex items-center gap-4">
           <NavbarMenuToggle
             srOnlyText=" "
             aria-label={isMenuOpen ? "Close menu" : "Open menu"}
             className="sm:hidden"
             icon={isMenuOpen ? <FiX /> : <FiMenu />}
           />
-          <Link to="/">
+          <Link to="/" aria-label="JGM Innovation Home">
             <NavbarBrand>
-              <SiAlwaysdata className="text-3xl" />
-              <span className="ml-2 font-bold text-xl pl-2">
+              <SiAlwaysdata className="text-3xl" aria-hidden="true" />
+              <span className="ml-2 font-bold text-xl">
                 JGM Innovation
               </span>
             </NavbarBrand>
           </Link>
         </div>
 
-        {/* Center Section */}
-        <div className="hidden sm:flex flex-grow justify-center gap-4">
-          {menuItems.map((item, index) => (
-            <Tooltip title={item.label} key={`${item.name}-${index}`} arrow>
-              <NavbarItem isActive={location.pathname === item.to}>
-                <Link to={item.to}>
-                  <item.icon
-                    className={`text-2xl ${
-                      location.pathname === item.to
-                        ? "text-blue-500"
-                        : "text-white"
-                    }`}
-                  />
-                </Link>
-              </NavbarItem>
-            </Tooltip>
-          ))}
+        {/* Center Section - Now properly centered on desktop, hidden on mobile */}
+        <div className="hidden sm:flex justify-center flex-1">
+          <div className="flex gap-4">
+            {menuItems.map((item, index) => (
+              <Tooltip title={item.label} key={`${item.name}-${index}`} arrow>
+                <NavbarItem
+                  isActive={location.pathname === item.to}
+                  aria-label={item.label}
+                  tabIndex={0}>
+                  <Link
+                    to={item.to}
+                    aria-current={
+                      location.pathname === item.to ? "page" : undefined
+                    }>
+                    <item.icon
+                      className={`text-2xl ${
+                        location.pathname === item.to
+                          ? "text-blue-500"
+                          : "text-white"
+                      }`}
+                      aria-label={item.label}
+                    />
+                  </Link>
+                </NavbarItem>
+              </Tooltip>
+            ))}
+          </div>
         </div>
 
-        {/* Right Section */}
+        {/* Right Section - Using flex-grow to balance the layout */}
         <div className="flex items-center gap-4">
+          <div className="flex items-center gap-2">
+            <UserPreferencesModal />
+            <Search />
+          </div>
           <NavbarItem className="hidden lg:flex">
-            <Link to="/login">Login</Link>
+            <Link
+              to="/login"
+              aria-label="Login to your account"
+              onTouchStart={() => {}} // Enable proper touch behavior
+            >
+              Login
+            </Link>
           </NavbarItem>
           <NavbarItem className="hidden lg:flex">
-            <Link to="/signup">Sign Up</Link>
+            <Link
+              to="/signup"
+              aria-label="Create a new account"
+              onTouchStart={() => {}} // Enable proper touch behavior
+            >
+              Sign Up
+            </Link>
           </NavbarItem>
         </div>
       </NavbarContent>
 
-      <NavbarMenu className="bg-zinc-950/90 backdrop-blur-sm z-[10000] w-full">
+      <NavbarMenu
+        className="bg-zinc-950/90 backdrop-blur-sm z-[10000] w-full max-w-full fixed top-[var(--navbar-height)] left-0 right-0"
+        aria-label="Main navigation menu">
+        <div className="flex justify-center gap-4 py-4 border-b border-zinc-700">
+          <UserPreferencesModal />
+          <Search />
+        </div>
         {menuItems.map((item, index) => (
           <NavbarMenuItem key={`${item.name}-${index}`}>
             <Link
               className="w-full flex items-center gap-2"
               to={item.to}
-              onClick={() => setIsMenuOpen(false)}>
+              onClick={() => setIsMenuOpen(false)}
+              aria-label={`Navigate to ${item.label}`}>
               <item.icon
                 className={`text-xl ${
                   location.pathname === item.to ? "text-blue-500" : "text-white"
                 }`}
+                aria-label={item.label}
               />
               {
                 <span
@@ -130,8 +167,9 @@ function NavigationBar() {
           <Link
             className="w-full flex items-center gap-2"
             to="/login"
-            onClick={() => setIsMenuOpen(false)}>
-            <FiLogIn className="text-xl text-white" />
+            onClick={() => setIsMenuOpen(false)}
+            aria-label="Login to your account">
+            <FiLogIn className="text-xl text-white" aria-hidden="true" />
             <span className="text-white">Login</span>
           </Link>
         </NavbarMenuItem>
@@ -139,8 +177,9 @@ function NavigationBar() {
           <Link
             className="w-full flex items-center gap-2"
             to="/signup"
-            onClick={() => setIsMenuOpen(false)}>
-            <FiUserPlus className="text-xl text-white" />
+            onClick={() => setIsMenuOpen(false)}
+            aria-label="Create a new account">
+            <FiUserPlus className="text-xl text-white" aria-hidden="true" />
             <span className="text-white">Sign Up</span>
           </Link>
         </NavbarMenuItem>
@@ -149,4 +188,4 @@ function NavigationBar() {
   );
 }
 
-export default NavigationBar;
+export default React.memo(NavigationBar);
