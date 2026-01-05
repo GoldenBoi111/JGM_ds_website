@@ -7,12 +7,15 @@ import {
   FiMaximize,
   FiMinimize,
   FiLoader,
+  FiDownload,
+  FiUser,
 } from "react-icons/fi";
 
 interface Message {
   from: "bot" | "user";
   text?: string;
   image?: string;
+  refs?: string[]; // Array of file references from the API
   id: string; // Make ID required for all messages
 }
 
@@ -44,6 +47,196 @@ const ChatBot = () => {
     id: string;
     src: string;
   } | null>(null);
+
+  /**
+   * Cleans up bot responses to make them more readable
+   */
+  const cleanBotResponse = (text: string): string => {
+    if (!text) return text;
+
+    console.log("Original text before cleaning:", text);
+
+    // Basic cleaning: remove excessive equals signs and clean up newlines
+    let cleaned = text
+      .replace(/={2,}\s*/g, "") // Remove excessive equals signs
+      .replace(/\n\s*\n\s*\n/g, "\n\n") // Clean up multiple newlines
+      .replace(/[ \t]+/g, " ") // Remove excessive spaces
+      .trim(); // Remove leading/trailing whitespace
+
+    console.log("Final cleaned text:", cleaned);
+
+    return cleaned;
+  };
+
+  /**
+   * Generates HTML transcript from messages
+   */
+  const generateHtmlTranscript = (messages: Message[]) => {
+    // Filter out the initial messages if needed
+    const conversationMessages = messages.filter(
+      (msg) =>
+        !(
+          msg.text === "Hello! How can I help you today?" ||
+          (msg.image && msg.id === "initial-2")
+        )
+    );
+
+    const html = [
+      "<!doctype html>",
+      "<html>",
+      "<head>",
+      '<meta charset="utf-8">',
+      "<title>JGM Conversation - Google Gemini Powered</title>",
+      "<style>",
+      'body { font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif; margin: 0; padding: 24px; background: #f5f5f5; }',
+      ".container { max-width: 900px; margin: auto; background: white; padding: 32px; border-radius: 12px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); }",
+      "h1 { color: #1a1a2e; margin-top: 0; }",
+      ".badge { background: linear-gradient(135deg, #4285f4 0%, #34a853 100%); color: white; padding: 4px 12px; border-radius: 12px; font-size: 12px; font-weight: 700; }",
+      ".message { margin: 20px 0; padding: 16px; border-radius: 8px; }",
+      ".user { background: #e3f2fd; border-left: 4px solid #2196f3; }",
+      ".bot { background: #e8f5e9; border-left: 4px solid #4caf50; }",
+      ".label { font-weight: 700; color: #333; margin-bottom: 8px; }",
+      ".content { white-space: pre-wrap; line-height: 1.6; color: #333; }",
+      ".content strong { font-weight: bold; color: #1a1a2e; }",
+      ".timestamp { font-size: 0.8em; color: #777; margin-top: 8px; }",
+      ".attachments { margin-top: 12px; padding-top: 12px; border-top: 1px solid #eee; }",
+      ".section-header { font-weight: 600; color: #555; font-size: 0.9em; margin-bottom: 8px; }",
+      ".attachment { margin-bottom: 12px; }",
+      ".attachment-header { font-weight: 500; color: #333; margin-bottom: 6px; }",
+      ".attachment-header .icon { margin-right: 6px; }",
+      ".embedded-map, .embedded-pdf { width: 100%; height: 300px; border: 1px solid #ccc; border-radius: 8px; margin-top: 8px; }",
+      ".embedded-chart { max-width: 100%; border-radius: 8px; margin-top: 8px; }",
+      "</style>",
+      "</head>",
+      "<body>",
+      '<div class="container">',
+      '<h1>🤖 JGM Insights Assistant <span class="badge">GOOGLE GEMINI</span></h1>',
+      "<p><em>Conversation transcript generated on " +
+        new Date().toLocaleString() +
+        "</em></p>",
+    ];
+
+    conversationMessages.forEach((msg) => {
+      const role = msg.from === "user" ? "user" : "bot";
+      const who = msg.from === "user" ? "You" : "Assistant";
+      const cssClass = role;
+
+      html.push(`<div class="message ${cssClass}">`);
+      html.push(`<div class="label">${who}</div>`);
+
+      // Handle text content
+      if (msg.text) {
+        let safeText = msg.text
+          .replace(/&/g, "&amp;")
+          .replace(/</g, "&lt;")
+          .replace(/>/g, "&gt;");
+
+        // Convert **text** to <strong>text</strong> for bold formatting first
+        safeText = safeText.replace(/\*\*([^*]+)\*\*/g, "<strong>$1</strong>");
+
+        // Convert bullet points to HTML list format for better presentation
+        if (safeText.includes("•")) {
+          const lines = safeText.split("\n");
+          const processedLines = [];
+          let inList = false;
+
+          for (const line of lines) {
+            if (line.trim().startsWith("•")) {
+              if (!inList) {
+                if (
+                  processedLines.length > 0 &&
+                  !processedLines[processedLines.length - 1].endsWith("<ul>")
+                ) {
+                  processedLines.push("<br>"); // Add line break before starting a list
+                }
+                processedLines.push("<ul>");
+                inList = true;
+              }
+              const listItem = line.replace(/^\s*•\s*/, "");
+              processedLines.push(`<li>${listItem}</li>`);
+            } else {
+              if (inList) {
+                processedLines.push("</ul>");
+                inList = false;
+              }
+              processedLines.push(line);
+            }
+          }
+
+          if (inList) {
+            processedLines.push("</ul>");
+          }
+
+          safeText = processedLines.join("");
+        }
+
+        html.push(`<div class="content">${safeText}</div>`);
+      }
+
+      // Handle file references (attachments)
+      if (msg.refs && msg.refs.length > 0) {
+        html.push('<div class="attachments">');
+        html.push('<div class="section-header">Attachments:</div>');
+
+        msg.refs.forEach(ref => {
+          let icon = "📎";
+          let label = "File";
+          let isEmbeddable = false;
+          let embedHtml = "";
+
+          if (ref.includes(".html") || ref.includes("map")) {
+            icon = "🗺️";
+            label = "Map";
+            isEmbeddable = true;
+            embedHtml = `<iframe src="${ref.startsWith('/') ? 'https://jgm-chatbot-1.onrender.com' + ref : ref}" class="embedded-map" title="Interactive Map" style="width: 100%; height: 300px; border: 1px solid #ccc; border-radius: 8px; margin-top: 8px;"></iframe>`;
+          } else if (ref.includes(".png") || ref.includes(".jpg") || ref.includes(".jpeg") || ref.includes("chart") || ref.includes("graph")) {
+            icon = "📊";
+            label = "Chart";
+            isEmbeddable = true;
+            embedHtml = `<img src="${ref.startsWith('/') ? 'https://jgm-chatbot-1.onrender.com' + ref : ref}" alt="Chart or Graph" class="embedded-chart" style="max-width: 100%; border-radius: 8px; margin-top: 8px;" />`;
+          } else if (ref.includes(".pdf")) {
+            icon = "📄";
+            label = "PDF";
+            isEmbeddable = true;
+            embedHtml = `<iframe src="${ref.startsWith('/') ? 'https://jgm-chatbot-1.onrender.com' + ref : ref}" class="embedded-pdf" title="PDF Document" style="width: 100%; height: 300px; border: 1px solid #ccc; border-radius: 8px; margin-top: 8px;"></iframe>`;
+          } else if (ref.includes(".csv") || ref.includes(".xlsx")) {
+            icon = "📈";
+            label = "Data";
+          }
+
+          if (isEmbeddable) {
+            html.push(`<div class="attachment embedded">`);
+            html.push(`<div class="attachment-header"><span class="icon">${icon}</span> ${label}</div>`);
+            html.push(embedHtml);
+            html.push('</div>');
+          } else {
+            // For non-embeddable files, create a link
+            html.push(`<div class="attachment link">`);
+            html.push(`<div class="attachment-header"><span class="icon">${icon}</span> ${label}: <a href="${ref.startsWith('/') ? 'https://jgm-chatbot-1.onrender.com' + ref : ref}" target="_blank">${ref.split('/').pop() || 'File'}</a></div>`);
+            html.push('</div>');
+          }
+        });
+
+        html.push('</div>');
+      }
+
+      // Handle image content
+      if (msg.image) {
+        html.push(
+          `<div class="content"><img src="${msg.image}" alt="Chat image" style="max-width: 100%; border-radius: 8px; margin-top: 8px;" /></div>`
+        );
+      }
+
+      html.push(
+        `<div class="timestamp">${new Date().toLocaleTimeString()}</div>`
+      );
+      html.push("</div>");
+    });
+
+    html.push("</div></body></html>");
+
+    return html.join("\n");
+  };
 
   /**
    * Scrolls the chat messages container to the bottom to show the latest message
@@ -148,11 +341,15 @@ const ChatBot = () => {
               return response.json();
             })
             .then((data) => {
+              console.log("Raw backend response:", data);
+              const cleanedReply = cleanBotResponse(data.reply);
+              console.log("Cleaned response:", cleanedReply);
               setMessages((prevMessages) => [
                 ...prevMessages,
                 {
                   from: "bot",
-                  text: data.reply,
+                  text: cleanedReply,
+                  refs: data.refs || [], // Include refs from the API response
                   id: `bot-${Date.now()}`,
                 },
               ]);
@@ -160,11 +357,14 @@ const ChatBot = () => {
             .catch((error) => {
               console.error("Error:", error);
               // Add an error message to the chat to inform the user
+              const errorMessage = cleanBotResponse(
+                "Sorry, I'm having trouble connecting to my server right now. Please try again later."
+              );
               setMessages((prevMessages) => [
                 ...prevMessages,
                 {
                   from: "bot",
-                  text: "Sorry, I'm having trouble connecting to my server right now. Please try again later.",
+                  text: errorMessage,
                   id: `error-${Date.now()}`,
                 },
               ]);
@@ -237,15 +437,172 @@ const ChatBot = () => {
               <h3 className="font-semibold text-white" tabIndex={0}>
                 JGM Support
               </h3>
-              <button
-                onClick={toggleFullScreen}
-                className="text-zinc-400 hover:text-white transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 rounded"
-                aria-label={
-                  isFullScreen ? "Exit full screen" : "Enter full screen"
-                }
-                tabIndex={0}>
-                {isFullScreen ? <FiMinimize /> : <FiMaximize />}
-              </button>
+              <div className="flex space-x-2">
+                <button
+                  onClick={async () => {
+                    // Filter out initial messages
+                    const conversationMessages = messages.filter(
+                      (msg) =>
+                        !(
+                          msg.text === "Hello! How can I help you today?" ||
+                          (msg.image && msg.id === "initial-2")
+                        )
+                    );
+
+                    if (conversationMessages.length === 0) {
+                      setMessages((prev) => [
+                        ...prev,
+                        {
+                          from: "bot",
+                          text: cleanBotResponse(
+                            "No conversation found to download. Please have a conversation first."
+                          ),
+                          id: `error-${Date.now()}`,
+                        },
+                      ]);
+                      return;
+                    }
+
+                    try {
+                      // Generate HTML content directly in the frontend
+                      const htmlContent = generateHtmlTranscript(messages);
+
+                      // Create a Blob with the HTML content
+                      const blob = new Blob([htmlContent], {
+                        type: "text/html;charset=utf-8",
+                      });
+
+                      // Create download link
+                      const url = URL.createObjectURL(blob);
+                      const a = document.createElement("a");
+                      a.href = url;
+
+                      // Generate timestamp for filename
+                      const now = new Date();
+                      const timestamp = now
+                        .toISOString()
+                        .slice(0, 19)
+                        .replace(/:/g, "-");
+                      a.download = `JGM_Conversation_${timestamp}.html`;
+
+                      document.body.appendChild(a);
+                      a.click();
+                      document.body.removeChild(a);
+                      URL.revokeObjectURL(url);
+                    } catch (error) {
+                      console.error("Download error:", error);
+                      setMessages((prev) => [
+                        ...prev,
+                        {
+                          from: "bot",
+                          text: cleanBotResponse(
+                            "Sorry, there was an error generating the download."
+                          ),
+                          id: `error-${Date.now()}`,
+                        },
+                      ]);
+                    }
+                  }}
+                  className="text-zinc-400 hover:text-white transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 rounded"
+                  aria-label="Download conversation"
+                  tabIndex={0}>
+                  <FiDownload />
+                </button>
+                <button
+                  onClick={async () => {
+                    try {
+                      // Prompt user for profile information
+                      const firstName = prompt("First name:") || "";
+                      const lastName = prompt("Last name:") || "";
+                      const role =
+                        prompt(
+                          "Role (parent/student/teacher/NGO/donor/investor):"
+                        ) || "";
+                      const contact = prompt("Contact (email/phone):") || "";
+
+                      // Validate that at least some information was provided
+                      if (!firstName && !lastName && !role && !contact) {
+                        setMessages((prev) => [
+                          ...prev,
+                          {
+                            from: "bot",
+                            text: cleanBotResponse(
+                              "Profile update cancelled or no information provided."
+                            ),
+                            id: `profile-cancel-${Date.now()}`,
+                          },
+                        ]);
+                        return;
+                      }
+
+                      // Call the backend profile endpoint
+                      const response = await fetch(
+                        "https://jgm-chatbot-1.onrender.com/api/set_profile",
+                        {
+                          method: "POST",
+                          headers: {
+                            "Content-Type": "application/json",
+                          },
+                          body: JSON.stringify({
+                            first_name: firstName,
+                            last_name: lastName,
+                            role: role,
+                            contact: contact,
+                          }),
+                        }
+                      );
+
+                      if (!response.ok) {
+                        throw new Error(
+                          `Profile update failed: ${response.status}`
+                        );
+                      }
+
+                      const data = await response.json();
+
+                      console.log("Profile API response:", data);
+                      // Add bot response to chat
+                      const cleanedMessage = cleanBotResponse(
+                        data.message || "Profile updated successfully!"
+                      );
+                      setMessages((prev) => [
+                        ...prev,
+                        {
+                          from: "bot",
+                          text: cleanedMessage,
+                          id: `profile-${Date.now()}`,
+                        },
+                      ]);
+                    } catch (error) {
+                      console.error("Profile update error:", error);
+                      const errorMessage = cleanBotResponse(
+                        "Sorry, there was an error updating your profile."
+                      );
+                      setMessages((prev) => [
+                        ...prev,
+                        {
+                          from: "bot",
+                          text: errorMessage,
+                          id: `profile-error-${Date.now()}`,
+                        },
+                      ]);
+                    }
+                  }}
+                  className="text-zinc-400 hover:text-white transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 rounded"
+                  aria-label="Set profile"
+                  tabIndex={0}>
+                  <FiUser />
+                </button>
+                <button
+                  onClick={toggleFullScreen}
+                  className="text-zinc-400 hover:text-white transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 rounded"
+                  aria-label={
+                    isFullScreen ? "Exit full screen" : "Enter full screen"
+                  }
+                  tabIndex={0}>
+                  {isFullScreen ? <FiMinimize /> : <FiMaximize />}
+                </button>
+              </div>
             </div>
             <div // Outer div for scrolling, flex-1, and min-h-0
               ref={scrollContainerRef}
@@ -260,16 +617,120 @@ const ChatBot = () => {
                     className={`flex mb-3 ${
                       msg.from === "bot" ? "justify-start" : "justify-end"
                     }`}>
-                    {msg.text && (
-                      <div
-                        className={`rounded-lg px-3 py-2 max-w-[80%] ${
-                          msg.from === "bot"
-                            ? "bg-zinc-700 text-white"
-                            : "bg-blue-600 text-white"
-                        }`}>
-                        {msg.text}
-                      </div>
-                    )}
+                    <div className="flex flex-col">
+                      {msg.text && (
+                        <div
+                          className={`rounded-lg px-3 py-2 max-w-[80%] ${
+                            msg.from === "bot"
+                              ? "bg-zinc-700 text-white"
+                              : "bg-blue-500 text-white"
+                          }`}
+                          style={{ whiteSpace: "pre-wrap" }}
+                          dangerouslySetInnerHTML={{
+                            __html: msg.text
+                              .replace(/&/g, "&amp;")
+                              .replace(/</g, "&lt;")
+                              .replace(/>/g, "&gt;")
+                              .replace(/\*\*([^*]+)\*\*/g, "<strong>$1</strong>"),
+                          }}></div>
+                      )}
+                      {msg.refs && msg.refs.length > 0 && (
+                        <div className="mt-3 w-full max-w-[80%]">
+                          <div className="text-xs font-semibold text-zinc-400 mb-2 px-3">Attachments:</div>
+                          <div className="space-y-3 pl-3">
+                            {msg.refs.map((ref, refIndex) => {
+                              // Determine file type based on extension
+                              let icon = "📎";
+                              let label = "File";
+                              let isEmbeddable = false;
+                              let embedComponent = null;
+
+                              if (ref.includes(".html") || ref.includes("map")) {
+                                icon = "🗺️";
+                                label = "Map";
+                                isEmbeddable = true;
+                                embedComponent = (
+                                  <iframe
+                                    src={ref.startsWith('/')
+                                      ? `https://jgm-chatbot-1.onrender.com${ref}`
+                                      : ref}
+                                    className="w-full h-64 border border-zinc-600 rounded-lg"
+                                    title="Interactive Map"
+                                    sandbox="allow-same-origin allow-scripts"
+                                  />
+                                );
+                              } else if (ref.includes(".png") || ref.includes(".jpg") || ref.includes(".jpeg") || ref.includes("chart") || ref.includes("graph")) {
+                                icon = "📊";
+                                label = "Chart";
+                                isEmbeddable = true;
+                                embedComponent = (
+                                  <img
+                                    src={ref.startsWith('/')
+                                      ? `https://jgm-chatbot-1.onrender.com${ref}`
+                                      : ref}
+                                    alt="Chart or Graph"
+                                    className="w-full max-h-64 object-contain rounded-lg border border-zinc-600"
+                                  />
+                                );
+                              } else if (ref.includes(".pdf")) {
+                                icon = "📄";
+                                label = "PDF";
+                                isEmbeddable = true;
+                                embedComponent = (
+                                  <iframe
+                                    src={ref.startsWith('/')
+                                      ? `https://jgm-chatbot-1.onrender.com${ref}`
+                                      : ref}
+                                    className="w-full h-64 border border-zinc-600 rounded-lg"
+                                    title="PDF Document"
+                                  />
+                                );
+                              } else if (ref.includes(".csv") || ref.includes(".xlsx")) {
+                                icon = "📈";
+                                label = "Data";
+                              }
+
+                              // For non-embeddable files, show as a link
+                              if (!isEmbeddable) {
+                                const fileUrl = ref.startsWith('/')
+                                  ? `https://jgm-chatbot-1.onrender.com${ref}`
+                                  : ref;
+
+                                return (
+                                  <a
+                                    key={refIndex}
+                                    href={fileUrl}
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    className="block w-full p-3 bg-zinc-800/50 hover:bg-zinc-700/70 border border-zinc-600 rounded-lg text-sm transition-all duration-200 group"
+                                  >
+                                    <div className="flex items-center">
+                                      <span className="text-lg mr-3 group-hover:scale-110 transition-transform">{icon}</span>
+                                      <div className="flex-1 min-w-0">
+                                        <div className="font-medium text-white truncate">{label}</div>
+                                        <div className="text-xs text-zinc-400 truncate">{ref.split('/').pop() || 'File'}</div>
+                                      </div>
+                                      <span className="ml-2 text-xs text-zinc-500 group-hover:text-zinc-300">↗</span>
+                                    </div>
+                                  </a>
+                                );
+                              }
+
+                              // For embeddable content, show the embedded component
+                              return (
+                                <div key={refIndex} className="w-full">
+                                  <div className="flex items-center text-sm mb-1">
+                                    <span className="mr-2">{icon}</span>
+                                    <span className="font-medium">{label}</span>
+                                  </div>
+                                  {embedComponent}
+                                </div>
+                              );
+                            })}
+                          </div>
+                        </div>
+                      )}
+                    </div>
                     {msg.image && (
                       <motion.img
                         layoutId={msg.id || `chat-image-${index}`}
