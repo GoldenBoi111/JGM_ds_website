@@ -178,7 +178,7 @@ const ChatBot = () => {
         html.push('<div class="attachments">');
         html.push('<div class="section-header">Attachments:</div>');
 
-        msg.refs.forEach(ref => {
+        msg.refs.forEach((ref) => {
           let icon = "📎";
           let label = "File";
           let isEmbeddable = false;
@@ -188,17 +188,35 @@ const ChatBot = () => {
             icon = "🗺️";
             label = "Map";
             isEmbeddable = true;
-            embedHtml = `<iframe src="${ref.startsWith('/') ? 'https://jgm-chatbot-1.onrender.com' + ref : ref}" class="embedded-map" title="Interactive Map" style="width: 100%; height: 300px; border: 1px solid #ccc; border-radius: 8px; margin-top: 8px;"></iframe>`;
-          } else if (ref.includes(".png") || ref.includes(".jpg") || ref.includes(".jpeg") || ref.includes("chart") || ref.includes("graph")) {
+            embedHtml = `<iframe src="${
+              ref.startsWith("/")
+                ? "https://jgm-chatbot-1.onrender.com" + ref
+                : ref
+            }" class="embedded-map" title="Interactive Map" style="width: 100%; height: 300px; border: 1px solid #ccc; border-radius: 8px; margin-top: 8px;"></iframe>`;
+          } else if (
+            ref.includes(".png") ||
+            ref.includes(".jpg") ||
+            ref.includes(".jpeg") ||
+            ref.includes("chart") ||
+            ref.includes("graph")
+          ) {
             icon = "📊";
             label = "Chart";
             isEmbeddable = true;
-            embedHtml = `<img src="${ref.startsWith('/') ? 'https://jgm-chatbot-1.onrender.com' + ref : ref}" alt="Chart or Graph" class="embedded-chart" style="max-width: 100%; border-radius: 8px; margin-top: 8px;" />`;
+            embedHtml = `<img src="${
+              ref.startsWith("/")
+                ? "https://jgm-chatbot-1.onrender.com" + ref
+                : ref
+            }" alt="Chart or Graph" class="embedded-chart" style="max-width: 100%; border-radius: 8px; margin-top: 8px;" />`;
           } else if (ref.includes(".pdf")) {
             icon = "📄";
             label = "PDF";
             isEmbeddable = true;
-            embedHtml = `<iframe src="${ref.startsWith('/') ? 'https://jgm-chatbot-1.onrender.com' + ref : ref}" class="embedded-pdf" title="PDF Document" style="width: 100%; height: 300px; border: 1px solid #ccc; border-radius: 8px; margin-top: 8px;"></iframe>`;
+            embedHtml = `<iframe src="${
+              ref.startsWith("/")
+                ? "https://jgm-chatbot-1.onrender.com" + ref
+                : ref
+            }" class="embedded-pdf" title="PDF Document" style="width: 100%; height: 300px; border: 1px solid #ccc; border-radius: 8px; margin-top: 8px;"></iframe>`;
           } else if (ref.includes(".csv") || ref.includes(".xlsx")) {
             icon = "📈";
             label = "Data";
@@ -206,18 +224,26 @@ const ChatBot = () => {
 
           if (isEmbeddable) {
             html.push(`<div class="attachment embedded">`);
-            html.push(`<div class="attachment-header"><span class="icon">${icon}</span> ${label}</div>`);
+            html.push(
+              `<div class="attachment-header"><span class="icon">${icon}</span> ${label}</div>`
+            );
             html.push(embedHtml);
-            html.push('</div>');
+            html.push("</div>");
           } else {
             // For non-embeddable files, create a link
             html.push(`<div class="attachment link">`);
-            html.push(`<div class="attachment-header"><span class="icon">${icon}</span> ${label}: <a href="${ref.startsWith('/') ? 'https://jgm-chatbot-1.onrender.com' + ref : ref}" target="_blank">${ref.split('/').pop() || 'File'}</a></div>`);
-            html.push('</div>');
+            html.push(
+              `<div class="attachment-header"><span class="icon">${icon}</span> ${label}: <a href="${
+                ref.startsWith("/")
+                  ? "https://jgm-chatbot-1.onrender.com" + ref
+                  : ref
+              }" target="_blank">${ref.split("/").pop() || "File"}</a></div>`
+            );
+            html.push("</div>");
           }
         });
 
-        html.push('</div>');
+        html.push("</div>");
       }
 
       // Handle image content
@@ -333,6 +359,7 @@ const ChatBot = () => {
               "Content-Type": "application/json",
             },
             body: JSON.stringify({ message: userMessage }),
+            credentials: "include", // Include cookies for session management
           })
             .then((response) => {
               if (!response.ok) {
@@ -549,6 +576,7 @@ const ChatBot = () => {
                             role: role,
                             contact: contact,
                           }),
+                          credentials: "include", // Include cookies for session management
                         }
                       );
 
@@ -617,13 +645,13 @@ const ChatBot = () => {
                     className={`flex mb-3 ${
                       msg.from === "bot" ? "justify-start" : "justify-end"
                     }`}>
-                    <div className="flex flex-col">
+                    <div className="flex flex-col max-w-[85%]">
                       {msg.text && (
                         <div
-                          className={`rounded-lg px-3 py-2 max-w-[80%] ${
+                          className={`rounded-lg px-3 py-2 ${
                             msg.from === "bot"
-                              ? "bg-zinc-700 text-white"
-                              : "bg-blue-500 text-white"
+                              ? "bg-zinc-700 text-white rounded-bl-none"
+                              : "bg-blue-500 text-white rounded-br-none text-right"
                           }`}
                           style={{ whiteSpace: "pre-wrap" }}
                           dangerouslySetInnerHTML={{
@@ -631,13 +659,16 @@ const ChatBot = () => {
                               .replace(/&/g, "&amp;")
                               .replace(/</g, "&lt;")
                               .replace(/>/g, "&gt;")
-                              .replace(/\*\*([^*]+)\*\*/g, "<strong>$1</strong>"),
+                              .replace(
+                                /\*\*([^*]+)\*\*/g,
+                                "<strong>$1</strong>"
+                              ),
                           }}></div>
                       )}
                       {msg.refs && msg.refs.length > 0 && (
-                        <div className="mt-3 w-full max-w-[80%]">
-                          <div className="text-xs font-semibold text-zinc-400 mb-2 px-3">Attachments:</div>
-                          <div className="space-y-3 pl-3">
+                        <div className="mt-2 w-full">
+                          <div className="text-xs font-semibold text-zinc-400 mb-1">Attachments:</div>
+                          <div className="space-y-2">
                             {msg.refs.map((ref, refIndex) => {
                               // Determine file type based on extension
                               let icon = "📎";
@@ -645,29 +676,42 @@ const ChatBot = () => {
                               let isEmbeddable = false;
                               let embedComponent = null;
 
-                              if (ref.includes(".html") || ref.includes("map")) {
+                              if (
+                                ref.includes(".html") ||
+                                ref.includes("map")
+                              ) {
                                 icon = "🗺️";
                                 label = "Map";
                                 isEmbeddable = true;
                                 embedComponent = (
                                   <iframe
-                                    src={ref.startsWith('/')
-                                      ? `https://jgm-chatbot-1.onrender.com${ref}`
-                                      : ref}
+                                    src={
+                                      ref.startsWith("/")
+                                        ? `https://jgm-chatbot-1.onrender.com${ref}`
+                                        : ref
+                                    }
                                     className="w-full h-64 border border-zinc-600 rounded-lg"
                                     title="Interactive Map"
                                     sandbox="allow-same-origin allow-scripts"
                                   />
                                 );
-                              } else if (ref.includes(".png") || ref.includes(".jpg") || ref.includes(".jpeg") || ref.includes("chart") || ref.includes("graph")) {
+                              } else if (
+                                ref.includes(".png") ||
+                                ref.includes(".jpg") ||
+                                ref.includes(".jpeg") ||
+                                ref.includes("chart") ||
+                                ref.includes("graph")
+                              ) {
                                 icon = "📊";
                                 label = "Chart";
                                 isEmbeddable = true;
                                 embedComponent = (
                                   <img
-                                    src={ref.startsWith('/')
-                                      ? `https://jgm-chatbot-1.onrender.com${ref}`
-                                      : ref}
+                                    src={
+                                      ref.startsWith("/")
+                                        ? `https://jgm-chatbot-1.onrender.com${ref}`
+                                        : ref
+                                    }
                                     alt="Chart or Graph"
                                     className="w-full max-h-64 object-contain rounded-lg border border-zinc-600"
                                   />
@@ -678,21 +722,26 @@ const ChatBot = () => {
                                 isEmbeddable = true;
                                 embedComponent = (
                                   <iframe
-                                    src={ref.startsWith('/')
-                                      ? `https://jgm-chatbot-1.onrender.com${ref}`
-                                      : ref}
+                                    src={
+                                      ref.startsWith("/")
+                                        ? `https://jgm-chatbot-1.onrender.com${ref}`
+                                        : ref
+                                    }
                                     className="w-full h-64 border border-zinc-600 rounded-lg"
                                     title="PDF Document"
                                   />
                                 );
-                              } else if (ref.includes(".csv") || ref.includes(".xlsx")) {
+                              } else if (
+                                ref.includes(".csv") ||
+                                ref.includes(".xlsx")
+                              ) {
                                 icon = "📈";
                                 label = "Data";
                               }
 
                               // For non-embeddable files, show as a link
                               if (!isEmbeddable) {
-                                const fileUrl = ref.startsWith('/')
+                                const fileUrl = ref.startsWith("/")
                                   ? `https://jgm-chatbot-1.onrender.com${ref}`
                                   : ref;
 
@@ -702,15 +751,22 @@ const ChatBot = () => {
                                     href={fileUrl}
                                     target="_blank"
                                     rel="noopener noreferrer"
-                                    className="block w-full p-3 bg-zinc-800/50 hover:bg-zinc-700/70 border border-zinc-600 rounded-lg text-sm transition-all duration-200 group"
-                                  >
+                                    className="block w-full p-3 bg-zinc-800/50 hover:bg-zinc-700/70 border border-zinc-600 rounded-lg text-sm transition-all duration-200 group">
                                     <div className="flex items-center">
-                                      <span className="text-lg mr-3 group-hover:scale-110 transition-transform">{icon}</span>
+                                      <span className="text-lg mr-3 group-hover:scale-110 transition-transform">
+                                        {icon}
+                                      </span>
                                       <div className="flex-1 min-w-0">
-                                        <div className="font-medium text-white truncate">{label}</div>
-                                        <div className="text-xs text-zinc-400 truncate">{ref.split('/').pop() || 'File'}</div>
+                                        <div className="font-medium text-white truncate">
+                                          {label}
+                                        </div>
+                                        <div className="text-xs text-zinc-400 truncate">
+                                          {ref.split("/").pop() || "File"}
+                                        </div>
                                       </div>
-                                      <span className="ml-2 text-xs text-zinc-500 group-hover:text-zinc-300">↗</span>
+                                      <span className="ml-2 text-xs text-zinc-500 group-hover:text-zinc-300">
+                                        ↗
+                                      </span>
                                     </div>
                                   </a>
                                 );
@@ -730,23 +786,23 @@ const ChatBot = () => {
                           </div>
                         </div>
                       )}
+                      {msg.image && (
+                        <motion.img
+                          layoutId={msg.id || `chat-image-${index}`}
+                          src={msg.image}
+                          alt="Chat image"
+                          onClick={() =>
+                            setFullScreenImage({
+                              id: msg.id || `chat-image-${index}`,
+                              src: msg.image!,
+                            })
+                          }
+                          className="rounded-lg max-w-[80%] mt-2 cursor-pointer"
+                          whileHover={{ scale: 1.05 }}
+                          transition={{ duration: 0.2 }}
+                        />
+                      )}
                     </div>
-                    {msg.image && (
-                      <motion.img
-                        layoutId={msg.id || `chat-image-${index}`}
-                        src={msg.image}
-                        alt="Chat image"
-                        onClick={() =>
-                          setFullScreenImage({
-                            id: msg.id || `chat-image-${index}`,
-                            src: msg.image!,
-                          })
-                        }
-                        className="rounded-lg max-w-[80%] cursor-pointer"
-                        whileHover={{ scale: 1.05 }}
-                        transition={{ duration: 0.2 }}
-                      />
-                    )}
                   </div>
                 ))}
                 {isLoading && (
