@@ -706,14 +706,25 @@ const ChatBot = () => {
                                 label = "Chart";
                                 isEmbeddable = true;
                                 embedComponent = (
-                                  <img
+                                  <motion.img
+                                    layoutId={`ref-image-${refIndex}-${msg.id || index}`}
                                     src={
                                       ref.startsWith("/")
                                         ? `https://jgm-chatbot-1.onrender.com${ref}`
                                         : ref
                                     }
                                     alt="Chart or Graph"
-                                    className="w-full max-h-64 object-contain rounded-lg border border-zinc-600"
+                                    className="w-full max-h-64 object-contain rounded-lg border border-zinc-600 cursor-pointer"
+                                    onClick={() =>
+                                      setFullScreenImage({
+                                        id: `ref-image-${refIndex}-${msg.id || index}`,
+                                        src: ref.startsWith("/")
+                                          ? `https://jgm-chatbot-1.onrender.com${ref}`
+                                          : ref
+                                      })
+                                    }
+                                    whileHover={{ scale: 1.02 }}
+                                    transition={{ duration: 0.2 }}
                                   />
                                 );
                               } else if (ref.includes(".pdf")) {
