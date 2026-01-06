@@ -1,13 +1,13 @@
 import { Link } from "react-router-dom";
 import React from "react";
 import {
-  FaTwitter,
+  FaEnvelope,
   FaFacebookSquare,
   FaInstagram,
   FaLinkedin,
-  FaEnvelope,
-  FaPhone,
   FaMapMarkerAlt,
+  FaPhone,
+  FaYoutube,
 } from "react-icons/fa";
 
 const Footer = () => {
@@ -28,15 +28,15 @@ const Footer = () => {
             </p>
             <div className="flex space-x-4">
               <a
-                href="https://twitter.com"
+                href="https://www.youtube.com/@jgm.innovation"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="bg-blue-600 text-white p-2 rounded-full hover:bg-blue-700 transition-colors duration-300 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 focus:ring-offset-zinc-900"
+                className="bg-red-600 text-white p-2 rounded-full hover:bg-red-700 transition-colors duration-300 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 focus:ring-offset-zinc-900"
                 aria-label="Follow us on Twitter">
-                <FaTwitter className="text-lg" />
+                <FaYoutube className="text-lg" />
               </a>
               <a
-                href="https://facebook.com"
+                href="https://www.facebook.com/jgminnovationperu"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="bg-blue-600 text-white p-2 rounded-full hover:bg-blue-700 transition-colors duration-300 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 focus:ring-offset-zinc-900"
@@ -44,7 +44,7 @@ const Footer = () => {
                 <FaFacebookSquare className="text-lg" />
               </a>
               <a
-                href="https://instagram.com"
+                href="https://www.instagram.com/jgm_innovation/"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="bg-pink-500 text-white p-2 rounded-full hover:bg-pink-600 transition-colors duration-300 focus:outline-none focus:ring-2 focus:ring-pink-500 focus:ring-offset-2 focus:ring-offset-zinc-900"
@@ -52,7 +52,7 @@ const Footer = () => {
                 <FaInstagram className="text-lg" />
               </a>
               <a
-                href="https://linkedin.com"
+                href="https://www.linkedin.com/company/jgm-innovation/posts/?feedView=all"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="bg-blue-700 text-white p-2 rounded-full hover:bg-blue-800 transition-colors duration-300 focus:outline-none focus:ring-2 focus:ring-blue-700 focus:ring-offset-2 focus:ring-offset-zinc-900"
@@ -107,17 +107,17 @@ const Footer = () => {
             <ul className="space-y-3">
               <li className="flex items-start">
                 <FaMapMarkerAlt className="text-blue-400 mt-1 mr-3 flex-shrink-0" />
-                <span className="text-gray-400">Lima, Peru</span>
+                <span className="text-gray-400">New York, NY, USA</span>
               </li>
               <li className="flex items-start">
                 <FaEnvelope className="text-blue-400 mt-1 mr-3 flex-shrink-0" />
                 <span className="text-gray-400">
-                  contact@jgm-innovation.com
+                  guevaraw@jgminnovation.org
                 </span>
               </li>
               <li className="flex items-start">
                 <FaPhone className="text-blue-400 mt-1 mr-3 flex-shrink-0" />
-                <span className="text-gray-400">+51 123 456 789</span>
+                <span className="text-gray-400">+1 516-884-2037</span>
               </li>
             </ul>
           </div>
@@ -155,7 +155,7 @@ const Footer = () => {
             </div>
           </div>
           <div className="flex space-x-6">
-            <Link
+            {/*<Link
               to="/privacy"
               className="text-gray-400 hover:text-white transition-colors duration-300 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:rounded focus:ring-offset-2 focus:ring-offset-zinc-900"
               aria-label="View privacy policy">
@@ -172,7 +172,7 @@ const Footer = () => {
               className="text-gray-400 hover:text-white transition-colors duration-300 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:rounded focus:ring-offset-2 focus:ring-offset-zinc-900"
               aria-label="View cookie policy">
               Cookie Policy
-            </Link>
+            </Link>*/}
           </div>
         </div>
       </div>
