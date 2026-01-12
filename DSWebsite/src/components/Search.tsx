@@ -25,10 +25,9 @@ const Search: React.FC = () => {
 
     // Search in blog posts
     const blogResults = blogPosts
-      .filter(post => 
+      .filter(post =>
         post.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
-        post.description.toLowerCase().includes(searchQuery.toLowerCase()) ||
-        post.content.toLowerCase().includes(searchQuery.toLowerCase())
+        post.description.toLowerCase().includes(searchQuery.toLowerCase())
       )
       .map(post => ({
         title: post.title,

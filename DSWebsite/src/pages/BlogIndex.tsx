@@ -46,16 +46,34 @@ const BlogIndex = () => {
     <>
       <Helmet>
         <title>JGM Innovation Blog - Data Science & AI Insights</title>
-        <meta name="description" content="Explore the latest insights on data science, AI, and social impact from JGM Innovation's blog." />
-        <meta name="keywords" content="data science, AI, machine learning, education, government, social impact, Peru, analytics, blog" />
+        <meta
+          name="description"
+          content="Explore the latest insights on data science, AI, and social impact from JGM Innovation's blog."
+        />
+        <meta
+          name="keywords"
+          content="data science, AI, machine learning, education, government, social impact, Peru, analytics, blog"
+        />
         <link rel="canonical" href="https://jgm-innovation.com/blog" />
         {/* Open Graph / Facebook */}
-        <meta property="og:title" content="JGM Innovation Blog - Data Science & AI Insights" />
-        <meta property="og:description" content="Explore the latest insights on data science, AI, and social impact from JGM Innovation's blog." />
+        <meta
+          property="og:title"
+          content="JGM Innovation Blog - Data Science & AI Insights"
+        />
+        <meta
+          property="og:description"
+          content="Explore the latest insights on data science, AI, and social impact from JGM Innovation's blog."
+        />
         <meta property="og:url" content="https://jgm-innovation.com/blog" />
         {/* Twitter */}
-        <meta name="twitter:title" content="JGM Innovation Blog - Data Science & AI Insights" />
-        <meta name="twitter:description" content="Explore the latest insights on data science, AI, and social impact from JGM Innovation's blog." />
+        <meta
+          name="twitter:title"
+          content="JGM Innovation Blog - Data Science & AI Insights"
+        />
+        <meta
+          name="twitter:description"
+          content="Explore the latest insights on data science, AI, and social impact from JGM Innovation's blog."
+        />
       </Helmet>
       <div className="flex flex-col min-h-screen">
         <NavigationBar />
@@ -86,7 +104,11 @@ const BlogIndex = () => {
                         <motion.div
                           layoutId="selected-category-pill"
                           className="absolute inset-0 bg-blue-600 rounded-full z-0"
-                          transition={{ type: "spring", stiffness: 500, damping: 30 }}
+                          transition={{
+                            type: "spring",
+                            stiffness: 500,
+                            damping: 30,
+                          }}
                         />
                       )}
                       <span className="relative z-10">{category}</span>
@@ -106,15 +128,14 @@ const BlogIndex = () => {
                 </div>
               </div>
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                {displayData.map((post, index) => (
+                {displayData.map((post, index) =>
                   isLoading ? (
                     <motion.div
                       key={`skeleton-${index}`}
                       initial={{ opacity: 0, y: 20 }}
                       animate={{ opacity: 1, y: 0 }}
                       transition={{ duration: 0.5, delay: index * 0.1 }}
-                      className="bg-zinc-900 rounded-lg overflow-hidden shadow-lg h-full"
-                    >
+                      className="bg-zinc-900 rounded-lg overflow-hidden shadow-lg h-full">
                       <Skeleton className="w-full h-48" />
                       <div className="p-6">
                         <Skeleton className="h-6 w-3/4 mb-4" />
@@ -138,8 +159,12 @@ const BlogIndex = () => {
                           className="w-full h-48"
                         />
                         <div className="p-6">
-                          <h2 className="text-2xl font-bold mb-2">{post.title}</h2>
-                          <p className="text-zinc-400 mb-4">{post.description}</p>
+                          <h2 className="text-2xl font-bold mb-2">
+                            {post.title}
+                          </h2>
+                          <p className="text-zinc-400 mb-4">
+                            {post.description}
+                          </p>
                           <span className="text-blue-400 hover:underline">
                             Read More &rarr;
                           </span>
@@ -147,12 +172,11 @@ const BlogIndex = () => {
                       </Link>
                     </motion.div>
                   )
-                ))}
+                )}
               </div>
             </div>
           </div>
         </main>
-        <Footer />
       </div>
     </>
   );

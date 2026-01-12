@@ -3,7 +3,7 @@ import { useRef, useState } from "react";
 import { motion, useMotionValue, useSpring } from "motion/react";
 
 interface TiltedCardProps {
-  imageSrc: React.ComponentProps<"img">["src"];
+  imageSrc?: React.ComponentProps<"img">["src"];
   altText?: string;
   captionText?: string;
   containerHeight?: React.CSSProperties["height"];
@@ -16,6 +16,8 @@ interface TiltedCardProps {
   showTooltip?: boolean;
   overlayContent?: React.ReactNode;
   displayOverlayContent?: boolean;
+  children?: React.ReactNode;
+  className?: string;
 }
 
 const springValues: SpringOptions = {
@@ -38,6 +40,8 @@ export default function TiltedCard({
   showTooltip = true,
   overlayContent = null,
   displayOverlayContent = false,
+  children,
+  className,
 }: TiltedCardProps) {
   const ref = useRef<HTMLElement>(null);
   const x = useMotionValue(0);
@@ -106,7 +110,7 @@ export default function TiltedCard({
       )}
 
       <motion.div
-        className="relative [transform-style:preserve-3d]"
+        className={`relative [transform-style:preserve-3d] ${className || ''}`}
         style={{
           width: imageWidth,
           height: imageHeight,
@@ -114,15 +118,21 @@ export default function TiltedCard({
           rotateY,
           scale,
         }}>
-        <motion.img
-          src={imageSrc}
-          alt={altText}
-          className="absolute top-0 left-0 object-cover rounded-[15px] will-change-transform [transform:translateZ(0)]"
-          style={{
-            width: imageWidth,
-            height: imageHeight,
-          }}
-        />
+        {imageSrc ? (
+          <motion.img
+            src={imageSrc}
+            alt={altText}
+            className="absolute top-0 left-0 object-cover rounded-[15px] will-change-transform [transform:translateZ(0)]"
+            style={{
+              width: imageWidth,
+              height: imageHeight,
+            }}
+          />
+        ) : (
+          <div className="absolute top-0 left-0 w-full h-full rounded-[15px] will-change-transform [transform:translateZ(0)] p-4">
+            {children}
+          </div>
+        )}
 
         {displayOverlayContent && overlayContent && (
           <motion.div className="absolute top-0 left-0 z-[2] will-change-transform [transform:translateZ(30px)]">

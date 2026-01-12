@@ -28,6 +28,17 @@ interface Message {
  */
 const ChatBot = () => {
   const [isOpen, setIsOpen] = useState(false);
+  const [sessionId, setSessionId] = useState<string>(() => {
+    // Get session ID from localStorage or generate a new one
+    const storedId = localStorage.getItem('jgm-session-id');
+    if (storedId) return storedId;
+
+    // Generate a new session ID using crypto.randomUUID()
+    const newId = crypto.randomUUID();
+    localStorage.setItem('jgm-session-id', newId);
+    return newId;
+  });
+
   const initialMessages = useRef<Message[]>([
     { from: "bot", text: "Hello! How can I help you today?", id: "initial-1" },
     {
@@ -357,6 +368,7 @@ const ChatBot = () => {
             method: "POST",
             headers: {
               "Content-Type": "application/json",
+              "X-Session-ID": sessionId, // Include session ID in header
             },
             body: JSON.stringify({ message: userMessage }),
             credentials: "include", // Include cookies for session management
@@ -371,6 +383,12 @@ const ChatBot = () => {
               console.log("Raw backend response:", data);
               const cleanedReply = cleanBotResponse(data.reply);
               console.log("Cleaned response:", cleanedReply);
+
+              // Check if the response contains "created an interactive map" and trigger full screen
+              if (cleanedReply.toLowerCase().includes("created an interactive map")) {
+                setIsFullScreen(true);
+              }
+
               setMessages((prevMessages) => [
                 ...prevMessages,
                 {
@@ -569,6 +587,7 @@ const ChatBot = () => {
                           method: "POST",
                           headers: {
                             "Content-Type": "application/json",
+                            "X-Session-ID": sessionId, // Include session ID in header
                           },
                           body: JSON.stringify({
                             first_name: firstName,

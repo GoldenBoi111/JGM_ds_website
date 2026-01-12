@@ -37,13 +37,22 @@ const BlogPost = () => {
       <Helmet>
         <title>{post.title} - JGM Innovation Blog</title>
         <meta name="description" content={post.description} />
-        <meta name="keywords" content={`data science, AI, ${post.category}, ${post.title}`} />
-        <link rel="canonical" href={`https://jgm-innovation.com/blog/${post.slug}`} />
+        <meta
+          name="keywords"
+          content={`data science, AI, ${post.category}, ${post.title}`}
+        />
+        <link
+          rel="canonical"
+          href={`https://jgm-innovation.com/blog/${post.slug}`}
+        />
         {/* Open Graph / Facebook */}
         <meta property="og:title" content={post.title} />
         <meta property="og:description" content={post.description} />
         <meta property="og:image" content={post.image} />
-        <meta property="og:url" content={`https://jgm-innovation.com/blog/${post.slug}`} />
+        <meta
+          property="og:url"
+          content={`https://jgm-innovation.com/blog/${post.slug}`}
+        />
         <meta property="og:type" content="article" />
         {/* Twitter */}
         <meta name="twitter:title" content={post.title} />
@@ -65,15 +74,16 @@ const BlogPost = () => {
                 alt={post.title}
                 className="w-full h-64 md:h-96 object-cover rounded-lg mb-8"
               />
-              <h1 className="text-4xl sm:text-5xl font-bold mb-4">{post.title}</h1>
+              <h1 className="text-4xl sm:text-5xl font-bold mb-4">
+                {post.title}
+              </h1>
               <p className="text-zinc-400 mb-8">{post.date}</p>
               <div className="prose prose-invert prose-lg max-w-none">
-                <p>{post.content}</p>
+                {post.content}
               </div>
             </motion.div>
           </div>
         </main>
-        <Footer />
       </div>
     </>
   );

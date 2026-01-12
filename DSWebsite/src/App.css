@@ -134,3 +134,38 @@ body,
   font-size: 0.9rem;
   color: #ccc;
 }
+
+.viz-row {
+  display: flex;
+  flex-direction: row; /* 👈 default desktop */
+  align-items: center;
+  gap: 24px;
+}
+
+.viz-row img {
+  width: 70%;
+  padding: 20px;
+}
+
+.viz-text {
+  width: 30%;
+}
+
+/* Alternate layout */
+.viz-row.reverse {
+  flex-direction: row-reverse;
+}
+
+/* 📱 Mobile only */
+@media screen and (max-width: 768px) {
+  .viz-row,
+  .viz-row.reverse {
+    flex-direction: column; /* 👈 only on small screens */
+  }
+
+  .viz-row img,
+  .viz-text {
+    width: 100%;
+    padding: 10px;
+  }
+}
