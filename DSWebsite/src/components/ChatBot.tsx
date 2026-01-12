@@ -28,14 +28,14 @@ interface Message {
  */
 const ChatBot = () => {
   const [isOpen, setIsOpen] = useState(false);
-  const [sessionId, setSessionId] = useState<string>(() => {
+  const [sessionId] = useState<string>(() => {
     // Get session ID from localStorage or generate a new one
-    const storedId = localStorage.getItem('jgm-session-id');
+    const storedId = localStorage.getItem("jgm-session-id");
     if (storedId) return storedId;
 
     // Generate a new session ID using crypto.randomUUID()
     const newId = crypto.randomUUID();
-    localStorage.setItem('jgm-session-id', newId);
+    localStorage.setItem("jgm-session-id", newId);
     return newId;
   });
 
@@ -385,7 +385,11 @@ const ChatBot = () => {
               console.log("Cleaned response:", cleanedReply);
 
               // Check if the response contains "created an interactive map" and trigger full screen
-              if (cleanedReply.toLowerCase().includes("created an interactive map")) {
+              if (
+                cleanedReply
+                  .toLowerCase()
+                  .includes("created an interactive map")
+              ) {
                 setIsFullScreen(true);
               }
 
@@ -686,7 +690,9 @@ const ChatBot = () => {
                       )}
                       {msg.refs && msg.refs.length > 0 && (
                         <div className="mt-2 w-full">
-                          <div className="text-xs font-semibold text-zinc-400 mb-1">Attachments:</div>
+                          <div className="text-xs font-semibold text-zinc-400 mb-1">
+                            Attachments:
+                          </div>
                           <div className="space-y-2">
                             {msg.refs.map((ref, refIndex) => {
                               // Determine file type based on extension
@@ -726,7 +732,9 @@ const ChatBot = () => {
                                 isEmbeddable = true;
                                 embedComponent = (
                                   <motion.img
-                                    layoutId={`ref-image-${refIndex}-${msg.id || index}`}
+                                    layoutId={`ref-image-${refIndex}-${
+                                      msg.id || index
+                                    }`}
                                     src={
                                       ref.startsWith("/")
                                         ? `https://jgm-chatbot-1.onrender.com${ref}`
@@ -736,10 +744,12 @@ const ChatBot = () => {
                                     className="w-full max-h-64 object-contain rounded-lg border border-zinc-600 cursor-pointer"
                                     onClick={() =>
                                       setFullScreenImage({
-                                        id: `ref-image-${refIndex}-${msg.id || index}`,
+                                        id: `ref-image-${refIndex}-${
+                                          msg.id || index
+                                        }`,
                                         src: ref.startsWith("/")
                                           ? `https://jgm-chatbot-1.onrender.com${ref}`
-                                          : ref
+                                          : ref,
                                       })
                                     }
                                     whileHover={{ scale: 1.02 }}

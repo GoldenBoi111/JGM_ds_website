@@ -7,7 +7,6 @@ import { Helmet } from "react-helmet-async";
 import LazyImage from "../components/LazyImage";
 import Skeleton from "../components/Skeleton";
 import NavigationBar from "../components/NavigationBar";
-import Footer from "../components/Footer";
 
 const categories = [
   "All",

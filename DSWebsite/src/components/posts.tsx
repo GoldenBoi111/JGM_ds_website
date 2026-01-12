@@ -8,8 +8,6 @@ import {
   CardActions,
   Button,
   Chip,
-  Box,
-  Divider,
   Accordion,
   AccordionSummary,
   AccordionDetails,
@@ -278,7 +276,7 @@ const Posts: React.FC<PostsProps> = ({
         </div>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-          {filteredPosts.map((post, index) => (
+          {filteredPosts.map((post) => (
             <div key={post.slug}>
               <BlogPostCard post={post} onClick={() => handlePostClick(post)} />
             </div>
