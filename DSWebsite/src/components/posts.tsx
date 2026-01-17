@@ -357,12 +357,11 @@ export const blogPosts: BlogPost[] = [
         </div>
 
         <div className="viz-row items-center gap-6 mb-6">
-          <object
-            data="https://al7dbmmmfb128wqh.public.blob.vercel-storage.com/Graph17.html"
+          <img
+            src="https://al7dbmmmfb128wqh.public.blob.vercel-storage.com/Graph27.png"
             style={{ width: "70%", padding: "20px" }}
             className="rounded-lg shadow"
-            type="text/html"
-            title="Interactive Geographic Map"
+            alt="Interactive Geographic Map"
           />
           <div>
             <strong>Visualization 3 — Geographic Distribution Map</strong>{" "}

@@ -43,7 +43,7 @@ categories, helping decision-makers quickly understand where attention is most u
 </div>
 <br>
 <div class="viz-row">
-<embed src="https://al7dbmmmfb128wqh.public.blob.vercel-storage.com/Graph17.html" style="width:70%; padding:20px;" alt="Interactive Geographic Map">
+<img src="https://al7dbmmmfb128wqh.public.blob.vercel-storage.com/Graph27.png" style="width:70%; padding:20px;" alt="Interactive Geographic Map">
 <div> <strong>Visualization 3 — Geographic Distribution Map</strong> <br>
 This interactive map visualizes 
 regional education indicators spatially using latitude and longitude. Bubble size represents 

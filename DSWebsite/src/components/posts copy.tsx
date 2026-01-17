@@ -280,11 +280,10 @@ export const blogPosts: BlogPost[] = [
                     </Typography>
                   </div>
                   <div className="bg-gray-50 dark:bg-gray-800 rounded-xl overflow-hidden border border-gray-200 dark:border-gray-700">
-                    <object
-                      data="https://al7dbmmmfb128wqh.public.blob.vercel-storage.com/Graph17.html"
+                    <img
+                      src="https://al7dbmmmfb128wqh.public.blob.vercel-storage.com/Graph27.png"
                       className="w-full h-64"
-                      type="text/html"
-                      title="Interactive Geographic Map"
+                      alt="Interactive Geographic Map"
                     />
                   </div>
                   <Typography
