@@ -361,7 +361,7 @@ export const blogPosts: BlogPost[] = [
             src="https://al7dbmmmfb128wqh.public.blob.vercel-storage.com/Graph27.png"
             style={{ width: "70%", padding: "20px" }}
             className="rounded-lg shadow"
-            alt="Interactive Geographic Map"
+            alt="Geographic Distribution Map"
           />
           <div>
             <strong>Visualization 3 — Geographic Distribution Map</strong>{" "}

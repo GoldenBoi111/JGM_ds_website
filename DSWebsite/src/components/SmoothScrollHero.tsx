@@ -10,7 +10,7 @@ import {
 } from "framer-motion";
 import { useRef, useEffect } from "react";
 import { Link } from "react-router-dom";
-import TiltedCard from "./TiltedCard.js";
+import TiltedCard from "./TiltedCard";
 
 // ------------------------------
 // Types
