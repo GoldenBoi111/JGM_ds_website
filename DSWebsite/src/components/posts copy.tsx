@@ -192,7 +192,7 @@ export const blogPosts: BlogPost[] = [
                 <CardMedia
                   component="img"
                   height="200"
-                  image="/src/assets/Graph1.png"
+                  image="https://al7dbmmmfb128wqh.public.blob.vercel-storage.com/Graph1.png"
                   alt="Correlation Heatmap"
                   className="object-cover"
                 />
@@ -230,7 +230,7 @@ export const blogPosts: BlogPost[] = [
                 <CardMedia
                   component="img"
                   height="200"
-                  image="/src/assets/Graph2.png"
+                  image="https://al7dbmmmfb128wqh.public.blob.vercel-storage.com/Graph2.png"
                   alt="Regional Overview Dashboard"
                   className="object-cover"
                 />
@@ -281,7 +281,7 @@ export const blogPosts: BlogPost[] = [
                   </div>
                   <div className="bg-gray-50 dark:bg-gray-800 rounded-xl overflow-hidden border border-gray-200 dark:border-gray-700">
                     <object
-                      data="/src/assets/Graph17.html"
+                      data="https://al7dbmmmfb128wqh.public.blob.vercel-storage.com/Graph17.html"
                       className="w-full h-64"
                       type="text/html"
                       title="Interactive Geographic Map"
@@ -312,7 +312,7 @@ export const blogPosts: BlogPost[] = [
                 <CardMedia
                   component="img"
                   height="200"
-                  image="/src/assets/Graph3.png"
+                  image="https://al7dbmmmfb128wqh.public.blob.vercel-storage.com/Graph3.png"
                   alt="Key Feature Relationships (Scatter Analysis)"
                   className="object-cover"
                 />

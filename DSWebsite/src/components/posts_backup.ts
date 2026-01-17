@@ -19,7 +19,7 @@ export const blogPosts: BlogPost[] = [
       "https://images.pexels.com/photos/3184418/pexels-photo-3184418.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
     content: `
     <div class="viz-row">
-    <img src="/src/assets/Graph1.png" style="width:70%; padding:20px;" alt="Correlation Heatmap">
+    <img src="https://al7dbmmmfb128wqh.public.blob.vercel-storage.com/Graph1.png" style="width:70%; padding:20px;" alt="Correlation Heatmap">
     <div> <strong>Visualization 1: Cross-Domain Correlation Heatmap</strong> <br>
 This chart helps us understand how different factors are connected to each other. Each square 
 shows whether two things tend to increase together, move in opposite directions, or have little 
@@ -31,7 +31,7 @@ outcomes are influenced by multiple connected factors, not just one single issue
 </div>
 <br>
 <div class="viz-row reverse">
-<img src="/src/assets/Graph2.png" style="width:70%; padding:20px;" alt="Regional Overview Dashboard">
+<img src="https://al7dbmmmfb128wqh.public.blob.vercel-storage.com/Graph2.png" style="width:70%; padding:20px;" alt="Regional Overview Dashboard">
 <div> <strong>Visualization 2: Regional Overview Dashboard</strong> <br>This dashboard gives a quick overall picture of how regions compare across several important 
 areas. One chart shows which regions have the highest number of applicants, helping us see 
 where participation is most concentrated. Another chart shows the overall balance between 
@@ -43,7 +43,7 @@ categories, helping decision-makers quickly understand where attention is most u
 </div>
 <br>
 <div class="viz-row">
-<embed src="/src/assets/Graph17.html" style="width:70%; padding:20px;" alt="Interactive Geographic Map">
+<embed src="https://al7dbmmmfb128wqh.public.blob.vercel-storage.com/Graph17.html" style="width:70%; padding:20px;" alt="Interactive Geographic Map">
 <div> <strong>Visualization 3 — Geographic Distribution Map</strong> <br>
 This interactive map visualizes 
 regional education indicators spatially using latitude and longitude. Bubble size represents 
@@ -56,7 +56,7 @@ region to view key metrics and compare regions without needing to scan tables.
 </div>
 <br>
 <div class="viz-row reverse">
-<img src="/src/assets/Graph3.png" style="width:70%; padding:20px;" alt="Key Feature Relationships (Scatter Analysis)">
+<img src="https://al7dbmmmfb128wqh.public.blob.vercel-storage.com/Graph3.png" style="width:70%; padding:20px;" alt="Key Feature Relationships (Scatter Analysis)">
 <div> <strong>Visualization 4: Key Feature Relationships (Scatter Analysis)</strong> <br>
 These scatter plots focus on a few meaningful feature pairs to illustrate real-world relationships in the data. Each point represents a 
 region, and the red dashed line shows the overall trend. The correlation value (r) provides a quick 

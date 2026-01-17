@@ -314,7 +314,7 @@ export const blogPosts: BlogPost[] = [
 
         <div className="viz-row items-center gap-6 mb-6">
           <img
-            src="/src/assets/Graph1.png"
+            src="https://al7dbmmmfb128wqh.public.blob.vercel-storage.com/Graph1.png"
             style={{ width: "70%", padding: "20px" }}
             alt="Correlation Heatmap"
             className="rounded-lg shadow"
@@ -336,7 +336,7 @@ export const blogPosts: BlogPost[] = [
 
         <div className="viz-row reverse items-center gap-6 mb-6">
           <img
-            src="/src/assets/Graph2.png"
+            src="https://al7dbmmmfb128wqh.public.blob.vercel-storage.com/Graph2.png"
             style={{ width: "70%", padding: "20px" }}
             alt="Regional Overview Dashboard"
             className="rounded-lg shadow"
@@ -358,7 +358,7 @@ export const blogPosts: BlogPost[] = [
 
         <div className="viz-row items-center gap-6 mb-6">
           <object
-            data="/src/assets/Graph17.html"
+            data="https://al7dbmmmfb128wqh.public.blob.vercel-storage.com/Graph17.html"
             style={{ width: "70%", padding: "20px" }}
             className="rounded-lg shadow"
             type="text/html"
@@ -381,7 +381,7 @@ export const blogPosts: BlogPost[] = [
 
         <div className="viz-row reverse items-center gap-6 mb-6">
           <img
-            src="/src/assets/Graph3.png"
+            src="https://al7dbmmmfb128wqh.public.blob.vercel-storage.com/Graph3.png"
             style={{ width: "70%", padding: "20px" }}
             alt="Key Feature Relationships (Scatter Analysis)"
             className="rounded-lg shadow"
