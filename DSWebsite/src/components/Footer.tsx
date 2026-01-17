@@ -44,7 +44,7 @@ const Footer = () => {
                 <FaFacebookSquare className="text-lg" />
               </a>
               <a
-                href="https://www.instagram.com/jgm_innovation/"
+                href="https://www.instagram.com/jgm.innovation/"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="bg-pink-500 text-white p-2 rounded-full hover:bg-pink-600 transition-colors duration-300 focus:outline-none focus:ring-2 focus:ring-pink-500 focus:ring-offset-2 focus:ring-offset-zinc-900"
